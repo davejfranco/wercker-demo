@@ -14,17 +14,6 @@ build:
         image: golang-demo-app
         name: myTestContainer     
     
-    # - script: 
-    #     name: Test the container
-    #     code: |
-          
-    #       SERVER=myTestCOntainer:5000
-
-    #       response=$(curl --write-out %{http_code} --silent --output /dev/null $SERVER)
-    #       if [ $response != 200 ]; then
-    #         echo "Test failed: container gave unexpected response code"
-    #         exit 1
-    #       fi
     - script: 
         name: Test the container
         code: |
@@ -44,22 +33,22 @@ build:
         name: myTestContainer               
 
     - internal/docker-push: 
-        image-name: golang-demo-api
-        username: $OCITENANT/$OCIUSER # Docker Hub username. When using CLI, set using "export X_USERNAME=<username>"  
-        password: $OCITOKEN # Docker Hub password. When using CLI, set using "export X_PASSWORD=<password>" 
+        image-name: golang-demo-app
+        username: $OCITENANT/$OCIUSER 
+        password: $OCITOKEN
         registry: https://iad.ocir.io/v2/
         repository: iad.ocir.io/$OCITENANT/wercker-demo
         tag: latest, ${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
 
-# deploy:  
+deploy:  
   
-#   box:
-#     id: golang
+  box:
+    id: golang
 
-#   steps:
+  steps:
 
-#     - kubectl:
-#         server: $KUBESERVER
-#         insecure-skip-tls-verify: true
-#         token: $KUBETOKEN
-#         command: set image deployment/api-deploy api=iad.ocir.io/$OCITENANT/api:${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
+    - kubectl:
+        server: $KUBESERVER
+        insecure-skip-tls-verify: true
+        token: $KUBETOKEN
+        command: set image deployment/api-deploy api=iad.ocir.io/$OCITENANT/api:${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
