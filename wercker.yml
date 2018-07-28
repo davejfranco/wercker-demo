@@ -34,18 +34,18 @@ build:
         username: $OCITENANT/$OCIUSER # Docker Hub username. When using CLI, set using "export X_USERNAME=<username>"  
         password: $OCITOKEN # Docker Hub password. When using CLI, set using "export X_PASSWORD=<password>" 
         registry: https://iad.ocir.io/v2/
-        repository: iad.ocir.io/$OCITENANT/api
+        repository: iad.ocir.io/$OCITENANT/wercker-demo
         tag: latest, ${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
 
-deploy:  
+# deploy:  
   
-  box:
-    id: golang
+#   box:
+#     id: golang
 
-  steps:
+#   steps:
 
-    - kubectl:
-        server: $KUBESERVER
-        insecure-skip-tls-verify: true
-        token: $KUBETOKEN
-        command: set image deployment/api-deploy api=iad.ocir.io/$OCITENANT/api:${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
+#     - kubectl:
+#         server: $KUBESERVER
+#         insecure-skip-tls-verify: true
+#         token: $KUBETOKEN
+#         command: set image deployment/api-deploy api=iad.ocir.io/$OCITENANT/api:${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
