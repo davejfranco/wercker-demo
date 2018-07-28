@@ -8,23 +8,37 @@ build:
         
     - internal/docker-build: 
         dockerfile: Dockerfile 
-        image-name: golang-demo-api # name used to refer to this image until it's pushed  
+        image-name: golang-demo-app # name used to refer to this image until it's pushed  
 
     - internal/docker-run:
-        image: golang-demo-api
+        image: golang-demo-app
         name: myTestContainer     
     
+    # - script: 
+    #     name: Test the container
+    #     code: |
+          
+    #       SERVER=myTestCOntainer:5000
+
+    #       response=$(curl --write-out %{http_code} --silent --output /dev/null $SERVER)
+    #       if [ $response != 200 ]; then
+    #         echo "Test failed: container gave unexpected response code"
+    #         exit 1
+    #       fi
     - script: 
         name: Test the container
         code: |
-          
-          SERVER=myTestCOntainer:5000
-
-          response=$(curl --write-out %{http_code} --silent --output /dev/null $SERVER)
-          if [ $response != 200 ]; then
-            echo "Test failed: container gave unexpected response code"
-            exit 1
-          fi
+            if curlOutput=`curl -s myTestContainer:5000`; then 
+                if [ "$curlOutput" == "Hello World!!" ]; then
+                    echo "Test passed: container gave expected response"
+                else
+                    echo "Test failed: container gave unexpected response: " $curlOutput
+                    exit 1
+                fi   
+            else 
+                echo "Test failed: container did not respond"
+                exit 1
+            fi        
 
     - internal/docker-kill:
         name: myTestContainer               
