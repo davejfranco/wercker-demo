@@ -11,7 +11,7 @@ type citiesResponse struct {
 }
 
 func helloHandler(res http.ResponseWriter, req *http.Request) {
-	http.ServeFile(res, req, "hello.html")
+	http.ServeFile(res, req, "/src/hello.html")
 }
 
 func cityHandler(res http.ResponseWriter, req *http.Request) {

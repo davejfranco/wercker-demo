@@ -1,8 +1,6 @@
 FROM golang  
-WORKDIR /work
+WORKDIR /src
 ADD . .
 RUN go test ./...
-RUN go build -o /bin/myapp .
-WORKDIR /
-RUN rm -r /work
-CMD ["/bin/myapp"]  
+RUN go build -o /src/myapp .
+CMD ["/src/myapp"]  
