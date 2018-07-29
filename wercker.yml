@@ -18,7 +18,7 @@ build:
         name: Test the containerR
         code: |
             if curlOutput=`curl -s myTestContainer:5000`; then 
-                if [ "$curlOutput" == "Hello World Demo!!" ]; then
+                if [ "$curlOutput" == "Hello World!!" ]; then
                     echo "Test passed: container gave expected response"
                 else
                     echo "Test failed: container gave unexpected response: " $curlOutput
