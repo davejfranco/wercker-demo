@@ -15,7 +15,7 @@ build:
         name: myTestContainer     
     
     - script: 
-        name: Test the containerR
+        name: Test the container
         code: |
             if curlOutput=`curl -s myTestContainer:5000`; then 
                 if [ "$curlOutput" == "Hello World!!" ]; then
